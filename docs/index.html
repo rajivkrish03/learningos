@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learning OS — Assisted Independence</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='70' font-size='58' font-family='monospace' font-weight='700' text-anchor='middle' fill='%23fff'>L</text></svg>" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ===== Login gate (name/code, no auth) ===== -->
+<div id="gate" class="gate">
+  <div class="gate-card">
+    <div class="brand"><span class="brand-mark">L</span> Learning OS</div>
+    <p class="tagline">Assisted Independence — Process Content in Data Cloud</p>
+    <label class="label" for="nameInput">Enter your name or study code to start</label>
+    <input id="nameInput" class="input" placeholder="e.g. priya, or T-04" autocomplete="off" />
+    <button id="startBtn" class="btn btn-primary">Start</button>
+    <p class="fine">No password. Your progress is saved in this browser.</p>
+  </div>
+</div>
+
+<!-- ===== Main app ===== -->
+<div id="app" class="app hidden">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">L</span> Learning OS</div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="ask">Ask freely</button>
+      <button class="tab" data-tab="path">Learn from path</button>
+    </nav>
+    <div class="userbox">
+      <span id="whoami" class="who"></span>
+      <button id="exportBtn" class="btn btn-ghost btn-sm" title="Download your results as JSON">Export</button>
+      <button id="settingsBtn" class="btn btn-ghost btn-sm" title="API key settings">⚙</button>
+    </div>
+  </header>
+
+  <main id="stage" class="stage"></main>
+</div>
+
+<!-- ===== Settings modal (BYO key) ===== -->
+<div id="settings" class="modal hidden">
+  <div class="modal-card">
+    <h3>API key</h3>
+    <p class="fine">For the "Ask freely" tab to generate answers, provide a Google Gemini API key. Stored only in this browser for the pilot. You can remove it anytime.</p>
+    <input id="keyInput" class="input" placeholder="paste your Gemini API key" autocomplete="off" />
+    <div class="row">
+      <button id="saveKeyBtn" class="btn btn-primary btn-sm">Save key</button>
+      <button id="deleteKeyBtn" class="btn btn-ghost btn-sm">Remove key</button>
+      <button id="closeSettingsBtn" class="btn btn-ghost btn-sm">Close</button>
+    </div>
+    <p id="keyStatus" class="fine"></p>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="js/items.js"></script>
+<script src="js/modules.js"></script>
+<script src="js/graph.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
