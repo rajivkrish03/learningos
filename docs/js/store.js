@@ -18,9 +18,9 @@ const USE_MOCK = true;              // flip to false when Supabase is wired
    ?arm=A (or no arm parameter) → treatment arm: predict + help ladder
    ?arm=B                         → baseline arm: MCQ, answer after selection
 
-   Study mode hides Ask freely in both arms. Use a separate product/demo
-   configuration if you want both tabs visible. Arm B uses a separate
-   localStorage key so its learner data does not mix with Arm A's data.
+   Arm A hides Ask freely; Arm B shows Ask freely while retaining baseline
+   MCQ behavior in Learn from path. Arm B uses a separate localStorage key
+   so its learner data does not mix with Arm A's data.
    ============================================================ */
 export const STUDY_MODE = true;     // experiment mode; hides Ask freely
 const requestedArm = new URLSearchParams(window.location.search).get('arm');
