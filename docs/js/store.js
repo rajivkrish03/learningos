@@ -10,27 +10,24 @@
    ============================================================ */
 
 const USE_MOCK = true;              // flip to false when Supabase is wired
-const LS_KEY = 'learning-os.v1';
+
 
 /* ============================================================
-   STUDY MODE — two lines to change between deploys.
+   STUDY MODE — selected by URL so both experiment arms can share one deployment.
 
-   STUDY_MODE: false  → full product (two tabs, predict step, all features)
-   STUDY_MODE: true   → stripped-down experiment arm (Tab A hidden,
-                        practice items only, ARM governs help policy)
+   ?arm=A (or no arm parameter) → treatment arm: predict + help ladder
+   ?arm=B                         → baseline arm: MCQ, answer after selection
 
-   ARM: 'A'  → withholding arm   (predict step + help ladder, answer NOT given)
-   ARM: 'B'  → baseline arm      (MCQ only, correct answer shown immediately)
-
-   ── Arm A deploy (treatment): STUDY_MODE = true,  ARM = 'A'  ← current
-   ── Arm B deploy (baseline):  STUDY_MODE = true,  ARM = 'B'  ← change ARM only
-   ── Product / demo:           STUDY_MODE = false, ARM = 'A'  ← flip STUDY_MODE only
-
-   Each arm is a separate GitHub Pages deploy (separate branch or repo).
-   The only line that differs between Arm A and Arm B is ARM below.
+   Study mode hides Ask freely in both arms. Use a separate product/demo
+   configuration if you want both tabs visible. Arm B uses a separate
+   localStorage key so its learner data does not mix with Arm A's data.
    ============================================================ */
-export const STUDY_MODE = true;     // false = full product/demo mode
-export const ARM = 'A';             // 'A' = withholding (treatment), 'B' = baseline
+export const STUDY_MODE = true;     // experiment mode; hides Ask freely
+const requestedArm = new URLSearchParams(window.location.search).get('arm');
+export const ARM = requestedArm === 'B' ? 'B' : 'A'; // defaults to Arm A
+
+// Preserve existing Arm A data; isolate Arm B profiles/events/API keys.
+const LS_KEY = ARM === 'B' ? 'learning-os.v1.arm-B' : 'learning-os.v1';
 
 /* ---------- low-level localStorage "database" ---------- */
 function _db() {
