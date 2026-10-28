@@ -35,8 +35,9 @@ async function startSession(name) {
 $('#startBtn').onclick = () => startSession($('#nameInput').value);
 $('#nameInput').addEventListener('keydown', e => { if (e.key === 'Enter') startSession($('#nameInput').value); });
 
-/* In study mode, hide Tab A so learners only see "Learn from path" */
-if (STUDY_MODE) {
+/* Arm A is the path-only treatment. Arm B keeps Ask freely visible
+   while retaining the baseline MCQ behavior for path practice. */
+if (STUDY_MODE && ARM === 'A') {
   const askTab = document.querySelector('.tab[data-tab="ask"]');
   if (askTab) askTab.style.display = 'none';
 }
